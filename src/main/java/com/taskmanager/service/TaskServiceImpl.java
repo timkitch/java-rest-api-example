@@ -15,8 +15,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getAllTasks() {
-        // TODO: Implement method to return all tasks
-        return null;
+        return taskRepository.findAll();
     }
 
     @Override
