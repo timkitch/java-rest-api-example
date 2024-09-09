@@ -67,4 +67,15 @@ public class TaskServiceImpl implements TaskService {
         Task task = getTaskById(taskId);
         return task.getDependencies();
     }
+
+    @Override
+    public boolean canCompleteTask(Long taskId) {
+        Task task = getTaskById(taskId);
+        for (Task dependency : task.getDependencies()) {
+            if (!dependency.isCompleted()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
