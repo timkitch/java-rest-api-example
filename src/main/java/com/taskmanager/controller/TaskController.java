@@ -23,8 +23,8 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
-        // TODO: Implement method to get a task by ID
-        return null;
+        Task task = taskService.getTaskById(id);
+        return ResponseEntity.ok(task);
     }
 
     @PostMapping
@@ -35,13 +35,13 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
-        // TODO: Implement method to update an existing task
-        return null;
+        Task updatedTask = taskService.updateTask(id, task);
+        return ResponseEntity.ok(updatedTask);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
-        // TODO: Implement method to delete a task
-        return null;
+        taskService.deleteTask(id);
+        return ResponseEntity.noContent().build();
     }
 }

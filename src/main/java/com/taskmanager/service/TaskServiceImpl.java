@@ -20,8 +20,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task getTaskById(Long id) {
-        // TODO: Implement method to return a task by its ID
-        return null;
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
     }
 
     @Override
@@ -30,13 +30,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task updateTask(Long id, Task task) {
-        // TODO: Implement method to update an existing task
-        return null;
+    public Task updateTask(Long id, Task taskDetails) {
+        Task task = getTaskById(id);
+        task.setTitle(taskDetails.getTitle());
+        task.setDescription(taskDetails.getDescription());
+        task.setStatus(taskDetails.getStatus());
+        return taskRepository.save(task);
     }
 
     @Override
     public void deleteTask(Long id) {
-        // TODO: Implement method to delete a task
+        Task task = getTaskById(id);
+        taskRepository.delete(task);
     }
 }
