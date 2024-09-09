@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -43,5 +44,27 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(Long id) {
         Task task = getTaskById(id);
         taskRepository.delete(task);
+    }
+
+    @Override
+    public Task addDependency(Long taskId, Long dependencyId) {
+        Task task = getTaskById(taskId);
+        Task dependency = getTaskById(dependencyId);
+        task.getDependencies().add(dependency);
+        return taskRepository.save(task);
+    }
+
+    @Override
+    public Task removeDependency(Long taskId, Long dependencyId) {
+        Task task = getTaskById(taskId);
+        Task dependency = getTaskById(dependencyId);
+        task.getDependencies().remove(dependency);
+        return taskRepository.save(task);
+    }
+
+    @Override
+    public Set<Task> getDependencies(Long taskId) {
+        Task task = getTaskById(taskId);
+        return task.getDependencies();
     }
 }

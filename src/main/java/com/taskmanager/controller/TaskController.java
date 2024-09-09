@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -82,5 +83,58 @@ public class TaskController {
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Adds a dependency to a task.
+     *
+     * This endpoint handles POST requests to add a dependency to a task. It takes the task ID
+     * and the dependency ID as path variables, adds the dependency using the taskService,
+     * and returns the updated task.
+     *
+     * @param id The ID of the task to which the dependency will be added.
+     * @param dependencyId The ID of the task to be added as a dependency.
+     * @return ResponseEntity<Task> A ResponseEntity containing the updated Task object
+     *         and a 200 OK status code.
+     */
+    @PostMapping("/{id}/dependencies/{dependencyId}")
+    public ResponseEntity<Task> addDependency(@PathVariable Long id, @PathVariable Long dependencyId) {
+        Task updatedTask = taskService.addDependency(id, dependencyId);
+        return ResponseEntity.ok(updatedTask);
+    }
+
+    /**
+     * Removes a dependency from a task.
+     *
+     * This endpoint handles DELETE requests to remove a dependency from a task. It takes the task ID
+     * and the dependency ID as path variables, removes the dependency using the taskService,
+     * and returns the updated task.
+     *
+     * @param id The ID of the task from which the dependency will be removed.
+     * @param dependencyId The ID of the task to be removed as a dependency.
+     * @return ResponseEntity<Task> A ResponseEntity containing the updated Task object
+     *         and a 200 OK status code.
+     */
+    @DeleteMapping("/{id}/dependencies/{dependencyId}")
+    public ResponseEntity<Task> removeDependency(@PathVariable Long id, @PathVariable Long dependencyId) {
+        Task updatedTask = taskService.removeDependency(id, dependencyId);
+        return ResponseEntity.ok(updatedTask);
+    }
+
+    /**
+     * Retrieves all dependencies of a task.
+     *
+     * This endpoint handles GET requests to retrieve all dependencies of a task. It takes the task ID
+     * as a path variable, retrieves the dependencies using the taskService, and returns the set of
+     * dependent tasks.
+     *
+     * @param id The ID of the task for which to retrieve dependencies.
+     * @return ResponseEntity<Set<Task>> A ResponseEntity containing a Set of Task objects
+     *         representing the dependencies, and a 200 OK status code.
+     */
+    @GetMapping("/{id}/dependencies")
+    public ResponseEntity<Set<Task>> getDependencies(@PathVariable Long id) {
+        Set<Task> dependencies = taskService.getDependencies(id);
+        return ResponseEntity.ok(dependencies);
     }
 }
