@@ -34,7 +34,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = getTaskById(id);
         task.setTitle(taskDetails.getTitle());
         task.setDescription(taskDetails.getDescription());
-        task.setStatus(taskDetails.getStatus());
+        task.setCompleted(taskDetails.isCompleted());
         return taskRepository.save(task);
     }
 
