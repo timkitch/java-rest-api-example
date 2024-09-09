@@ -30,8 +30,17 @@ class TaskServiceImplTest {
     void updateTask_shouldUpdateTaskFields() {
         // Arrange
         Long taskId = 1L;
-        Task existingTask = new Task(taskId, "Old Title", "Old Description", false);
-        Task updatedTaskDetails = new Task(taskId, "New Title", "New Description", true);
+        Task existingTask = new Task();
+        existingTask.setId(taskId);
+        existingTask.setTitle("Old Title");
+        existingTask.setDescription("Old Description");
+        existingTask.setCompleted(false);
+
+        Task updatedTaskDetails = new Task();
+        updatedTaskDetails.setId(taskId);
+        updatedTaskDetails.setTitle("New Title");
+        updatedTaskDetails.setDescription("New Description");
+        updatedTaskDetails.setCompleted(true);
 
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(existingTask));
         when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> invocation.getArgument(0));
@@ -53,7 +62,11 @@ class TaskServiceImplTest {
     void updateTask_shouldThrowExceptionWhenTaskNotFound() {
         // Arrange
         Long taskId = 1L;
-        Task updatedTaskDetails = new Task(taskId, "New Title", "New Description", true);
+        Task updatedTaskDetails = new Task();
+        updatedTaskDetails.setId(taskId);
+        updatedTaskDetails.setTitle("New Title");
+        updatedTaskDetails.setDescription("New Description");
+        updatedTaskDetails.setCompleted(true);
 
         when(taskRepository.findById(taskId)).thenReturn(Optional.empty());
 
