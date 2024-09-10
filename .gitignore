@@ -50,11 +50,6 @@ buildNumber.properties
 # VS Code
 .vscode/
 
-# Spring Boot
-spring-boot-starter/
-**/application*.yml
-**/application*.properties
-
 # H2 Database
 *.db
 

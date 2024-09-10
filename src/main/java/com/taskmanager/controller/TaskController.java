@@ -21,12 +21,32 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    /**
+     * Retrieves all tasks.
+     *
+     * This endpoint handles GET requests to retrieve all tasks. It uses the taskService
+     * to fetch all tasks from the system and returns them as a list.
+     *
+     * @return ResponseEntity<List<Task>> A ResponseEntity containing a List of all Task objects
+     *         and a 200 OK status code.
+     */
     @GetMapping
     public ResponseEntity<List<Task>> getAllTasks() {
         List<Task> tasks = taskService.getAllTasks();
         return ResponseEntity.ok(tasks);
     }
 
+    /**
+     * Retrieves a task by its ID.
+     *
+     * This endpoint handles GET requests to retrieve a specific task. It takes the task ID
+     * as a path variable, fetches the corresponding task using the taskService,
+     * and returns it.
+     *
+     * @param id The ID of the task to be retrieved, provided as a path variable.
+     * @return ResponseEntity<Task> A ResponseEntity containing the requested Task object
+     *         and a 200 OK status code.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
         Task task = taskService.getTaskById(id);
